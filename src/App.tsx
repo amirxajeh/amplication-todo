@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { ITask } from "./@types/Task";
+
+import "./App.css";
+import CreateTask from "./components/CreateTasks/CreateTasks";
+import Tasks from "./components/Tasks/Tasks";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [tasks, setTasks] = useState<ITask[]>([]);
+
+  const createTask = (text: string, id: number) => ({
+    id,
+    text,
+    completed: false,
+  });
+
+  const addTask = (task: string) => {
+    const temp = [...tasks];
+    temp.push(createTask(task, tasks.length));
+    setTasks(temp);
+  };
+
+  const toggleCompleted = (id: number) => {
+    let temp = [...tasks];
+    const i = temp.findIndex((t) => t.id === id);
+    temp[i].completed = !temp[i].completed;
+    setTasks(temp);
+  };
+
+  return <div>
+    <CreateTask addTask={addTask} />
+    <Tasks tasks={tasks} toggleCompleted={toggleCompleted} />
+  </div>;
 }
 
 export default App;
