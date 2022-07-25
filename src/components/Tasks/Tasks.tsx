@@ -4,7 +4,7 @@ import Task from "../Task/Task";
 
 interface IProps {
   tasks: ITask[],
-  toggleCompleted: (id: number) => void
+  toggleCompleted: (id: ITask) => Promise<void>
 }
 
 const Tasks: FC<IProps> = ({ tasks, toggleCompleted }): JSX.Element => {

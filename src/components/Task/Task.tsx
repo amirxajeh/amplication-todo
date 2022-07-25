@@ -3,7 +3,7 @@ import { ITask } from "../../@types/Task";
 
 interface IProps {
   task: ITask,
-  toggleCompleted: (id: number) => void
+  toggleCompleted: (id: ITask) => Promise<void>
 }
 
 const Task: FC<IProps> = ({ task, toggleCompleted }): JSX.Element => {
@@ -15,8 +15,8 @@ const Task: FC<IProps> = ({ task, toggleCompleted }): JSX.Element => {
       <input
         type="checkbox"
         checked={completed}
-        onClick={() => toggleCompleted(task.id)}
-        onChange={() => setCompleted(task.completed)}
+        onClick={() => toggleCompleted(task)}
+        onChange={() => setCompleted(!task.completed)}
         readOnly
       />
     </li>
